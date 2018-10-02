@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Project</title>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        .form
+        {
+        text-align:center;
+        }
+        span,label
+        {
+        width:150px;
+        }
+         body
+        {
+        margin-left:100px;
+        margin-right:100px;
+        }
+    </style>
+    <script>
+        cnt=0;
+    </script>
+    <script>
+
+         $(document).ready(function() {
+
+
+        var wrapper         = $(".adstudent");
+        var add_button      = $("#add");
+
+        $(add_button).click(function(e)
+        {
+        if(cnt==3)
+         {
+         alert('Only 3 students can be added');
+         return false;
+         }
+         else
+         {
+         cnt=cnt+1;
+            e.preventDefault();
+
+            htmlcode='<div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text" >Student Name</span></div><input type="text" name="studname'+cnt+'"id="id_studname'+cnt+'" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></div>';
+
+
+        html2='<div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text" >Roll Number</span></div>';
+        html3='<input type="text" name="stuid'+cnt+'"id="id_stuid'+cnt+'" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></div>';
+         html4='<div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text" >Contact</span></div>';
+        html5='<input type="text" name="contact'+cnt+'" id="id_contact'+cnt+'" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></div>';
+        html6='<div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text" >Email</span></div><input type="text" name="email'+cnt+'" id="id_email'+cnt+'" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></div>';
+                $(wrapper).append(htmlcode+html2+html3+html4+html5+html6); //add input box
+
+        return true;
+        }
+
+        });
+
+    });
+    </script>
+</head>
+<body>
+<h3 align="center">Submit new project</h3>
+<div class="form">
+<form method="post">
+    {%csrf_token%}
+    <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Project Name</span>
+  </div>
+  <input type="text" name="projname" id="id_projname" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+</div>
+    <div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Project Description</span>
+  </div>
+  <textarea name="projdesc" id="id_projdesc" class="form-control" aria-label="With textarea"></textarea>
+</div>
+<br/>
+    <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <label class="input-group-text" for="id_branch">Branch</label>
+  </div>
+         <select class="custom-select" name="branch" id="id_branch">
+    <option selected>Choose...</option>
+    <option value="CSE">CSE</option>
+    <option value="ECE">ECE</option>
+    <option value="IT">IT</option>
+      <option value="EEE">EEE</option>
+      <option value="CE">CE</option>
+      <option value="Mechanical">Mechanical</option>
+      <option value="EIE">EIE</option>
+  </select>
+</div>
+     <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Topic</span>
+  </div>
+  <input type="text" name="topic" id="id_topic" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+</div>
+
+    <div class="adstudent">
+
+    </div>
+    <button class="btn btn-light" id="add" >Add Student</button>
+    <input type="submit" class="btn btn-primary" value="Submit"/>
+</form>
+</div>
+</body>
+</html>

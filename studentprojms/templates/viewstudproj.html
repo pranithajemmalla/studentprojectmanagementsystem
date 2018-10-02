@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>View Student Project</title>
+    <style>
+        table
+        {
+        width:100%;
+        }
+        body
+        {
+        margin:10px;
+        }
+        .proj
+        {
+        padding-left:10px;
+        background-color:lightblue;
+        border: 1px solid lightgray;
+        margin-left:10px;
+        margin-right:10px;
+        border-radius:5px;
+        }
+    </style>
+</head>
+<body>
+     <div class="proj">
+      <h3>{{p.projname}}</h3>
+          <p style="margin-left:100px;">{{p.projdesc}}</p>
+      </div>
+    <p id="projid" data-catid="{{p.id}}"></p>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>RollNo</th>
+            <th>Contact</th>
+            <th>Email</th>
+        </tr>
+
+
+    {% for s in students %}
+ <tr>
+
+     <td><p> {{ s.name }}</p></td>
+          <td><p> {{ s.roll }}</p></td>
+          <td><p> {{ s.cnt }}</p></td>
+     <td><p> {{ s.email }}</p></td>
+
+     <td><a href="{% url 'studmarks' p.id s.roll %}" class="btn">View</a>
+     </td>
+         </tr>
+        {% endfor %}
+        </table>
+<div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Report</span>
+  </div>
+  <textarea name="projdesc" id="id_projdesc" class="form-control" aria-label="With textarea"></textarea>
+</div>
+    <br/>
+    <div align="center"> <button class="send btn btn-primary" id="sid">Send Report</button></div>
+</body>
+<script>
+    $('.send').click(function(){
+    var catid,uid;
+    catid = $('#id_projdesc').val();
+    uid=$('#projid').attr("data-catid");
+    $.ajax(
+    {
+        type:"GET",
+        url: "/sendreport",
+        data:{
+                 report:catid,
+                 pid:uid
+        },
+        success: function( data )
+        {
+            $( '#sid' ).text("Sent");
+            $('#sid').prop('disabled', true);
+        }
+     })
+});
+
+</script>
+</html>

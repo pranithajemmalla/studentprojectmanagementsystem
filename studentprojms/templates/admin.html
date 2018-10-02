@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+
+         #newproj
+        {
+        margin-top:10px;
+           text-align:center;
+           margin-bottom:10px;
+        }
+         .cb
+        {
+        text-align:center;
+        }
+        .table
+        {
+         border:2px solid black;
+         padding:10px;
+         margin:10px;
+         width:90%;
+         text-align:center;
+         margin-left:50px;
+        }
+       th
+       {
+       background-color:lightgray;
+       }
+        .a
+        {
+        width:50%;
+        float:left;
+        background-color:lightblue;
+        height:35px;
+        padding-top:2px;
+        text-align:center;
+        }
+        a
+        {
+         focus {outline:0;}
+        }
+    </style>
+</head>
+<body>
+<h2 align="center">Student Projects</h2>
+    <h3  align="center">CVR College Of Engineering</h3>
+    <p style="float:right;margin-right:10px;" align="right"><a href="{% url 'adminlogin' %}">Logout</a></p>
+    <div id="newproj">
+    <a href="{% url 'addmentor' %}">Add new reviewer</a>
+          </div>
+<br/>
+        <a  href="{% url 'adminpage' %}"><div class="a">Reviewers </div></a>
+        <a  href="{% url 'adminprojects' %}"> <div class="a">Projects</div></a>
+    <br>
+    <br/>
+    <table class="table table-hover">
+        <tr><th>Reviewer Name</th><th>Subject</th><th>Contact</th><th>Email</th></tr>
+  {% for r in reviewers %}
+
+        <tr>  <a href=""><td>{{ r.fname}}</td>
+         <td>{{ r.subject }}</td>
+        <td>{{ r.contact }}</td>
+            <td>{{ r.email }}</td></a>
+        </tr>
+ {% endfor %}
+    </table>
+<br/>
+    <div class="accordion" id="accordionExample">
+         {% for p in projects %}
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          {{ p.projname }}
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body cb">
+          <p>Description: {{p.projdesc}}</p>
+          <table align="center">
+              <tr><td><h5>Student ID </h5> </td><td>{{p.stuid}}</td></tr>
+              <tr><td><h5>Student Name</h5></td><td>{{p.studname }}</td></tr>
+          <tr><td><h5>Branch </h5></td><td>{{p.branch}}</td></tr>
+          <tr><td><h5>Contact </h5></td><td>{{p.contact}}</td></tr>
+          <tr><td><h5>Email</h5></td><td> {{p.email}}</td></tr>
+              <tr><td><h5>Reviews</h5></td><td> {{p.count}}</td></tr>
+
+          </table>
+              <button type="button" class="btn btn-primary approveproj" data-catid="{{p.id}}" id="approveproj{{p.id}}">Approve</button>
+
+      </div>
+    </div>
+  </div>
+        {% endfor %}
+</div>
+
+
+</body>
+</html>

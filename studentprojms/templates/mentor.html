@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mentor Page</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <style>
+        .cb
+        {
+        text-align:center;
+        }
+        .proj
+        {
+        padding-left:10px;
+        background-color:lightblue;
+        border: 1px solid lightgray;
+        margin-left:10px;
+        margin-right:10px;
+        border-radius:5px;
+
+        }
+        a:hover
+        {
+        text-decoration: none;
+        }
+        </style>
+</head>
+<body>
+<h2 align="center">Student Projects</h2>
+    <h3 align="center">CVR College Of Engineering</h3>
+<p align="right">{{mentor.fname}}</p>
+<p align="right"><a href="{% url 'mentorlogin' %}">Logout</a></p>
+    <div class="list-group">
+        {% for p in projects %}
+
+  <a href="{% url 'viewstudproj' p.id %}" >
+      <div class="proj">
+      <h3>{{p.projname}}</h3>
+          <p style="margin-left:100px;">{{p.projdesc}}</p>
+      </div>
+  </a>
+</div>
+    {% endfor %}
+<script>
+ $('.reviewproj').click(function(){
+    var catid,uid;
+    catid = $(this).attr("data-catid");
+    uid=$(this).attr("data-auth");
+    $.ajax(
+    {
+        type:"GET",
+        url: "/reviewproj/"+uid,
+        data:{
+                 pid:catid
+        },
+        success: function( data )
+        {
+            $( '#reviewproj'+ catid ).text("Reviewed");
+            $('#reviewproj'+ catid).prop('disabled', true);
+
+        }
+     })
+});
+</script>
+</body>
+</html>
